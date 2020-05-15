@@ -16,7 +16,25 @@ class DepartamentoController extends Controller
      */
     public function index()
     {
-        $departamentos = new DepartamentoCollection(Departamento::all());
+        // return response()->json(request('search'), 200);
+        // $departamentoQuery = Departamento::filter(request()->only('search'))
+        //     ->get();
+
+        $departamentos = new DepartamentoCollection(
+            Departamento::filter(request()->only('search'))
+                ->get()
+        );
+        // $departamentos = new DepartamentoCollection(
+        //     Departamento::all()
+        //         ->filter(request()->only('search'))
+        // );
+        // $q = strlen(request('search')) ? request('search') : '';
+        // $departamentos = new DepartamentoCollection(
+        //     Departamento::where('nombre_departamento', 'like', '%' . $q . '%')
+        //         ->get()
+        // );
+
+        // $departamentos = new DepartamentoCollection(Departamento::all());
         return $departamentos;
     }
 
@@ -27,12 +45,12 @@ class DepartamentoController extends Controller
      */
     public function create()
     {
-        $data = request()->validate([
-            'nombre_departamento' => '',
-        ]);
-        $departamento = Departamento::create($data);
-        $departamentoCol = new DepartamentoResource($departamento);
-        return $departamentoCol;
+        // $data = request()->validate([
+        //     'nombre_departamento' => '',
+        // ]);
+        // $departamento = Departamento::create($data);
+        // $departamentoCol = new DepartamentoResource($departamento);
+        // return $departamentoCol;
     }
 
     /**
