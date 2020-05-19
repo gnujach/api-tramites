@@ -19,8 +19,8 @@ return [
 
     'allowed_methods' => ['*'],
 
-    'allowed_origins' => ['*'],
-    // 'allowed_origins' => ['127.0.0.1:8080', 'localhost:8080'],
+    // 'allowed_origins' => ['usae.netlify.app', 'localhost:8080', '127.0.0.1:8080'],
+    'allowed_origins' => ['http://127.0.0.1:8080', 'https://usae.netlify.app'],
 
     'allowed_origins_patterns' => [],
 
