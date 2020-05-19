@@ -20,7 +20,7 @@ return [
     'allowed_methods' => ['*'],
 
     // 'allowed_origins' => ['usae.netlify.app', 'localhost:8080', '127.0.0.1:8080'],
-    'allowed_origins' => ['http://127.0.0.1:8080', 'https://usae.netlify.app'],
+    'allowed_origins' => [env('PUBLIC_TOKEN')],
 
     'allowed_origins_patterns' => [],
 
