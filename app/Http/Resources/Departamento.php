@@ -22,6 +22,7 @@ class Departamento extends JsonResource
                     'nombre_departamento' => $this->nombre_departamento,
                     'activo' => $this->activo,
                     'created_at' => \Carbon\Carbon::parse($this->created_at)->diffForHumans(),
+                    'updated_at' => \Carbon\Carbon::parse($this->updated_at)->diffForHumans(),
                 ]
             ],
             'links' => [

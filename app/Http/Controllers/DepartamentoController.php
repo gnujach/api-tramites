@@ -22,7 +22,7 @@ class DepartamentoController extends Controller
 
         $departamentos = new DepartamentoCollection(
             Departamento::filter(request()->only('search'))
-                ->get()
+                ->paginate(5)
         );
         // $departamentos = new DepartamentoCollection(
         //     Departamento::all()
@@ -59,7 +59,7 @@ class DepartamentoController extends Controller
      * @param  \Illuminate\Http\Request  $request
      * @return \Illuminate\Http\Response
      */
-    public function store(Request $request)
+    public function store()
     {
         $data = request()->validate([
             'nombre_departamento' => 'required|unique:departamentos|max:25|min:5',
@@ -77,7 +77,6 @@ class DepartamentoController extends Controller
      */
     public function show(Departamento $departamento)
     {
-        //
     }
 
     /**
@@ -88,7 +87,8 @@ class DepartamentoController extends Controller
      */
     public function edit(Departamento $departamento)
     {
-        //
+        $departamentoR = new  DepartamentoResource($departamento);
+        return $departamentoR;
     }
 
     /**
@@ -100,7 +100,12 @@ class DepartamentoController extends Controller
      */
     public function update(Request $request, Departamento $departamento)
     {
-        //
+        $data = request()->validate([
+            'nombre_departamento' => 'required|unique:departamentos|max:25|min:5',
+        ]);
+        $departamento->update(request()->all());
+        $departamentoUpdate = new DepartamentoResource($departamento);
+        return $departamentoUpdate;
     }
 
     /**

@@ -18,6 +18,14 @@ class DepartamentoCollection extends ResourceCollection
             'data' => $this->collection,
             'links' => [
                 'self' => url('/api/departamentos'),
+            ],
+            'pagination'    => [
+                'total'         =>  $this->total(),
+                'per_page'      =>  $this->perPage(),
+                'current_page'  =>  $this->currentPage(),
+                'last_page'     =>  $this->lastPage(),
+                'from'          =>  $this->firstItem(),
+                'to'            =>  $this->lastItem(),
             ]
         ];
     }
