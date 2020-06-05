@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
+use App\Http\Resources\User as UserResource;
 
 class AccessController extends Controller
 {
@@ -14,7 +15,6 @@ class AccessController extends Controller
             'email' => 'required|email',
             'password' => 'required'
         ]);
-
         $user = User::where('email', $request->email)->first();
         if (!$user || !Hash::check($request->password, $user->password)) {
             return response([
@@ -23,9 +23,10 @@ class AccessController extends Controller
         }
         $token = $user->createToken('my-app-token')->plainTextToken;
         $response = [
-            'user' => $user,
+            'user' => new UserResource($user),
             'token' => $token
         ];
+
         return response($response, 201);
     }
 

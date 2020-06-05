@@ -22,7 +22,7 @@ class DepartamentoController extends Controller
 
         $departamentos = new DepartamentoCollection(
             Departamento::filter(request()->only('search'))
-                ->paginate(5)
+                ->paginate(10)
         );
         // $departamentos = new DepartamentoCollection(
         //     Departamento::all()

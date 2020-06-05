@@ -38,4 +38,29 @@ class User extends Authenticatable
     protected $casts = [
         'email_verified_at' => 'datetime',
     ];
+    public function images()
+    {
+        return $this->hasMany(UserImage::class);
+        // return $this->hasMany('App\UserImage');
+    }
+
+    /**
+     * Description, en esta relación observar que es otra relación con el 
+     * modelo UserImage, solo que esta relación es uno a uno
+     * y tomamos la última imagen que sea de tipo cover en el campo location
+     */
+    public function coverImage()
+    {
+        // return $this->hasOne(UserImage::class)
+        return $this->hasOne('App\UserImage')
+            ->orderByDesc('id')
+            ->where('location', 'cover');
+    }
+    public function profileImage()
+    {
+        // return $this->hasOne(UserImage::class)
+        return $this->hasOne('App\UserImage')
+            ->orderByDesc('id')
+            ->where('location', 'profile');
+    }
 }
