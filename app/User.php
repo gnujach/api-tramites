@@ -61,6 +61,9 @@ class User extends Authenticatable
         // return $this->hasOne(UserImage::class)
         return $this->hasOne('App\UserImage')
             ->orderByDesc('id')
-            ->where('location', 'profile');
+            ->where('location', 'profile')
+            ->withDefault(function ($userImage) {
+                $userImage->path = 'storage/user-images/user_default.png';
+            });
     }
 }
