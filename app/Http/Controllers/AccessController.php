@@ -31,11 +31,33 @@ class AccessController extends Controller
     }
 
     /**
+     * Login with Office 365
+     * 
+     */
+    public function loginwithms(Request $request)
+    {
+        $userms =  $request->user();
+        $user = User::where('email', $userms->email)->first();
+        if ($user->tokens()->delete()) {
+            $response = [
+                'logout' => true,
+            ];
+        };
+        $token = $user->createToken('my-app-token')->plainTextToken;
+        $response = [
+            'user' => new UserResource($user),
+            'token' => $token
+        ];
+        return response($response, 200);
+    }
+
+    /**
      * @param user
      */
     public function logout(Request $request)
     {
         $user = User::where('id', $request->id)->first();
+        dd($request);
         if ($user->tokens()->delete()) {
             $response = [
                 'logout' => true,

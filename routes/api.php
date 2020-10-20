@@ -20,3 +20,4 @@ Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
     ]);
     Route::post('/user-images', 'UserImageController@store');
 });
+Route::middleware('auth:sanctum')->post('/auth/loginwithms', 'AccessController@loginwithms');

@@ -20,3 +20,5 @@ Route::get('/', function () {
 // Auth::routes();
 
 // Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/login/azure', '\App\Http\Middleware\Azure@azure');
+Route::get('/login/azurecallback', '\App\Http\Middleware\Azure@azurecallback');

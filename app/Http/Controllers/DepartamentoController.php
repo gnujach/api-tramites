@@ -62,7 +62,8 @@ class DepartamentoController extends Controller
     public function store()
     {
         $data = request()->validate([
-            'nombre_departamento' => 'required|unique:departamentos|max:25|min:5',
+            // 'nombre_departamento' => 'required|unique:departamentos|max:25|min:5',
+            'nombre_departamento' => 'required|max:45|min:5',
         ]);
         $departamento = Departamento::create($data);
         $departamentoCol = new DepartamentoResource($departamento);
