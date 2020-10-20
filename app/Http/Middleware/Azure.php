@@ -10,6 +10,9 @@ use Illuminate\Http\Request;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
 use App\Http\Resources\User as UserResource;
+use Spatie\Permission\Models\Permission;
+use Spatie\Permission\Models\Role;
+use Spatie\Permission\PermissionRegistrar;
 use App\User;
 use Auth;
 use Hash;
@@ -160,12 +163,13 @@ class Azure
         $refresh_token = $contents->refresh_token;
         $profile = json_decode(base64_decode(explode(".", $contents->id_token)[1]));
         // dd($profile);
+        $urlfront = env('PUBLIC_TOKEN');
         $finduser = User::where('email', $profile->unique_name)->first();
         if ($finduser) {
             Auth::login($finduser);
             $token = $finduser->createToken('my-app-token')->plainTextToken;
             // $userResource = new UserResource($finduser);
-            return redirect()->away('http://localhost:8080/loginwithms?usertoken=' . $token);
+            return redirect()->away($urlfront . '/loginwithms?usertoken=' . $token);
             // return redirect()->away('http://localhost:8080/login');
             // return redirect('/dashboard');
         } else {
@@ -174,12 +178,10 @@ class Azure
                 'email' => $profile->unique_name,
                 'password' => Hash::make(Str::random(24)),
             ]);
+            $newUser->assignRole('admin');
+            Auth::login($newUser);
             $token = $newUser->createToken('my-app-token')->plainTextToken;
-            return redirect()->away('http://localhost:8080/login')->json([
-                'user' => new UserResource($newUser),
-                'token' => $token
-            ]);
-            // Auth::login($newUser);
+            return redirect()->away('http://localhost:8080/loginwithms?usertoken=' . $token);
 
             // return redirect('/dashboard');
         }

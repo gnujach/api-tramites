@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use App\User;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Resources\User as UserResource;
+use Auth;
 
 class AccessController extends Controller
 {
@@ -56,8 +57,8 @@ class AccessController extends Controller
      */
     public function logout(Request $request)
     {
-        $user = User::where('id', $request->id)->first();
-        dd($request);
+        $user = User::where('id', Auth::id())->first();
+        // dd($user);
         if ($user->tokens()->delete()) {
             $response = [
                 'logout' => true,

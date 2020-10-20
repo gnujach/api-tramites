@@ -17,7 +17,7 @@ class MakeSeeder extends Seeder
     {
         // Reset cached roles and permissions
         app()[PermissionRegistrar::class]->forgetCachedPermissions();
-        $user = User::where('email', 'admin@example.com')->first();
+        $user = User::where('email', 'j_abarca@seg.guanajuato.gob.mx')->first();
         $user->assignRole('admin');
     }
 }
