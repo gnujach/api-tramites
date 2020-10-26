@@ -17,4 +17,8 @@ class Departamento extends Model
             });
         });
     }
+    public function tramites()
+    {
+        return $this->hasMany('App\Tramite');
+    }
 }

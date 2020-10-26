@@ -155,7 +155,7 @@ class Azure
 
             $contents = json_decode($response->getBody()->getContents());
         } catch (RequestException $e) {
-            // dd($e);
+            dd($e);
             return $this->fail($request, $e);
         }
 

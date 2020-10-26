@@ -18,6 +18,11 @@ Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
             'index' => 'departamentos'
         ]
     ]);
+    Route::resource('tramites', 'TramiteController', [
+        'names' => [
+            'index' => 'tramites'
+        ]
+    ]);
     Route::post('/user-images', 'UserImageController@store');
 });
 Route::middleware('auth:sanctum')->post('/auth/loginwithms', 'AccessController@loginwithms');
