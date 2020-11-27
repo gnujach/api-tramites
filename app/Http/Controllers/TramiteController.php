@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Tramite;
+use App\Requisito;
 use Illuminate\Http\Request;
 use App\Http\Resources\Tramite as TramiteResource;
 use App\Http\Resources\TramiteCollection;
@@ -18,6 +19,10 @@ class TramiteController extends Controller
     {
         $tramites = new TramiteCollection(
             Tramite::filter(request()->only('search'))
+                ->orderBy('id', 'desc')
+                ->with('departamento')
+                ->with('dependencia')
+                ->with('tipousuario')
                 ->paginate(10)
         );
         return $tramites;
@@ -43,28 +48,49 @@ class TramiteController extends Controller
     {
         //Autorización
         //Validación
+        $dependencia_id = 1;
+
         $data = request()->validate([
             'nombre' => 'required|min:5|max:45',
         ]);
+        $departamento_id = request()->set_departamento['id'];
+        $tipousuario_id = request()->set_tipousuario['id'];
         //Lógica
         $Tramite = Tramite::create([
             'nombre' => request()->nombre,
-            'dependencia_id' => request()->dependencia_id,
-            'tipousuario_id' => request()->tipousuario_id,
-            'departamento_id' => request()->departamento_id,
+            'dependencia_id' => $dependencia_id,
+            'tipousuario_id' => $tipousuario_id,
+            'departamento_id' => $departamento_id,
             'objetivo' => request()->objetivo,
             'documento_obtenido' => request()->documento_obtenido,
             'datos_institucionales' => request()->datos_institucionales,
-            'plazo_respuesta' => request()->plazo_respuesta,
-            'costo' => request()->costo,
+            'plazo_respuesta' => request()->plazo,
+            'costo' => 0,
             'url_proceso' => request()->url_proceso,
-            'activo' => request()->activo
+            'activo' => true
         ]);
         $tramiteResource = new TramiteResource($Tramite);
         //Respuesta
         return $tramiteResource;
     }
-
+    /**
+     * Save requisitos a tramite
+     */
+    public function addreqtotramite(int $id)
+    {
+        $req_valido = false;
+        $tramite = Tramite::findOrFail($id);
+        $requisitos = request()->requisitos;
+        foreach ($requisitos as $requisito) {
+            $req = Requisito::find($requisito);
+            if ($req) {
+                $req_valido = true;
+            }
+        }
+        if ($req_valido)
+            $tramite->requisitos()->sync($requisitos);
+        return response()->json($requisitos);
+    }
     /**
      * Display the specified resource.
      *
@@ -73,7 +99,8 @@ class TramiteController extends Controller
      */
     public function show(Tramite $tramite)
     {
-        //
+        $tramiteResource = new  TramiteResource($tramite);
+        return $tramiteResource;
     }
 
     /**
@@ -84,7 +111,8 @@ class TramiteController extends Controller
      */
     public function edit(Tramite $tramite)
     {
-        //
+        $tramiteResource = new  TramiteResource($tramite);
+        return $tramiteResource;
     }
 
     /**

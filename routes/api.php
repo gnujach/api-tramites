@@ -1,10 +1,10 @@
 <?php
 
-use Illuminate\Http\Request;
+// use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
 
-Route::post('login', 'AccessController@login');
+Route::post('/login', 'AccessController@login');
 Route::middleware('auth:sanctum')->post('logout', 'AccessController@logout');
 Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
     Route::get('/user', 'UserController@index');
@@ -13,11 +13,16 @@ Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
             'index' => 'users'
         ]
     ]);
+    Route::get('/getdepartamentos', 'DepartamentoController@getdepartamentos');
+    Route::get('/getrequisitos', 'RequisitoController@getrequisitos');
+    Route::get('/gettipousuarios', 'TipousuarioController@gettipousuarios');
+    Route::post('/tramites/addreqtotramite/{id}', 'TramiteController@addreqtotramite');
     Route::resource('departamentos', 'DepartamentoController', [
         'names' => [
             'index' => 'departamentos'
         ]
     ]);
+    Route::resource('requisitos', 'RequisitoController');
     Route::resource('tramites', 'TramiteController', [
         'names' => [
             'index' => 'tramites'

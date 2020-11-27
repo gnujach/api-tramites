@@ -37,6 +37,16 @@ class DepartamentoController extends Controller
         // $departamentos = new DepartamentoCollection(Departamento::all());
         return $departamentos;
     }
+    public function getdepartamentos()
+    {
+        $departamentos = Departamento::where('activo', 1)->get();
+        return response()->json(
+            $departamentos
+        );
+        return view('home');
+    }
+
+
 
     /**
      * Show the form for creating a new resource.

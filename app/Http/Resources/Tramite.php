@@ -3,6 +3,10 @@
 namespace App\Http\Resources;
 
 use Illuminate\Http\Resources\Json\JsonResource;
+use App\Http\Resources\Departamento;
+use App\Http\Resources\Dependencia;
+use App\Http\Resources\Tipousuario;
+use App\Http\Resources\RequisitoCatalog;
 
 class Tramite extends JsonResource
 {
@@ -18,6 +22,10 @@ class Tramite extends JsonResource
             'data' => [
                 'type' => 'tramites',
                 'tramite_id' => $this->id,
+                'departamento' => new Departamento($this->whenLoaded('departamento')),
+                'dependencia' => new Dependencia($this->whenLoaded('dependencia')),
+                'tipousuario' => new Tipousuario($this->whenLoaded('tipousuario')),
+                'requisitos' => new RequisitoCatalog($this->whenLoaded('requisitos')),
                 'attributes' => [
                     'nombre' => $this->nombre,
                     'departamento_id' => $this->departamento_id,

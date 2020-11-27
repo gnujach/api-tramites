@@ -17,6 +17,14 @@ class TipousuarioController extends Controller
         //
     }
 
+    public function gettipousuarios()
+    {
+        $tipousuarios = Tipousuario::all();
+        return response()->json(
+            $tipousuarios
+        );
+        return view('home');
+    }
     /**
      * Show the form for creating a new resource.
      *

@@ -66,7 +66,6 @@ class Azure
         } catch (RequestException $e) {
             $this->fail($request, $e);
         }
-
         if (empty($contents->access_token) || empty($contents->refresh_token)) {
             $this->fail($request, new \Exception('Missing tokens in response contents'));
         }
@@ -155,14 +154,14 @@ class Azure
 
             $contents = json_decode($response->getBody()->getContents());
         } catch (RequestException $e) {
-            dd($e);
+            // dd($e);
             return $this->fail($request, $e);
         }
 
         $access_token = $contents->access_token;
         $refresh_token = $contents->refresh_token;
         $profile = json_decode(base64_decode(explode(".", $contents->id_token)[1]));
-        // dd($profile);
+        // dd($access_token);
         $urlfront = env('PUBLIC_TOKEN');
         $finduser = User::where('email', $profile->unique_name)->first();
         if ($finduser) {

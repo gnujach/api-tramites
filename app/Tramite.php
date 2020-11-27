@@ -11,6 +11,7 @@ class Tramite extends Model
         'documento_obtenido', 'datos_institucionales', 'plazo_respuesta', 'costo',
         'url_proceso', 'activo'
     ];
+    protected $with = ['departamento', 'tipousuario', 'requisitos'];
     public function scopeFilter($query, array $filters)
     {
         $query->when($filters['search'] ?? null, function ($query, $search) {
@@ -30,5 +31,9 @@ class Tramite extends Model
     public function tipousuario()
     {
         return $this->belongsTo('App\Tipousuario');
+    }
+    public function requisitos()
+    {
+        return $this->belongsToMany('App\Requisito')->withTimestamps();
     }
 }
