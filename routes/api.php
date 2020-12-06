@@ -17,6 +17,7 @@ Route::group(['middleware' => ['role:admin', 'auth:sanctum']], function () {
     Route::get('/getrequisitos', 'RequisitoController@getrequisitos');
     Route::get('/gettipousuarios', 'TipousuarioController@gettipousuarios');
     Route::post('/tramites/addreqtotramite/{id}', 'TramiteController@addreqtotramite');
+    Route::post('/tramites/tareas/save/{id}', 'TareaController@store');
     Route::resource('departamentos', 'DepartamentoController', [
         'names' => [
             'index' => 'departamentos'
