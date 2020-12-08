@@ -23,6 +23,7 @@ class TramiteController extends Controller
                 ->with('departamento')
                 ->with('dependencia')
                 ->with('tipousuario')
+                ->with('tareas')
                 ->paginate(10)
         );
         return $tramites;

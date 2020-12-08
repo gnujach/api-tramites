@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Tarea;
+use App\Http\Resources\TareaCollection;
 // use App\Tramite;
 
 class TareaController extends Controller
@@ -23,7 +24,10 @@ class TareaController extends Controller
             foreach ($tasks as $task) {
                 Tarea::create(['tramite_id' => $id, 'nombre' => $task['nombre']]);
             }
+            $tareas  = new TareaCollection(Tarea::where('tramite_id', $id)->get());
+            return response()->json($tareas, 201);
+        } else {
+            return response()->json(TRUE, 422);
         }
-        return response()->json(TRUE, 201);
     }
 }

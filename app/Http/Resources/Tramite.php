@@ -7,6 +7,7 @@ use App\Http\Resources\Departamento;
 use App\Http\Resources\Dependencia;
 use App\Http\Resources\Tipousuario;
 use App\Http\Resources\RequisitoCatalog;
+use App\Http\Resources\TareaCollection;
 
 class Tramite extends JsonResource
 {
@@ -26,6 +27,7 @@ class Tramite extends JsonResource
                 'dependencia' => new Dependencia($this->whenLoaded('dependencia')),
                 'tipousuario' => new Tipousuario($this->whenLoaded('tipousuario')),
                 'requisitos' => new RequisitoCatalog($this->whenLoaded('requisitos')),
+                'tareas' => new TareaCollection($this->whenLoaded('tareas')),
                 'attributes' => [
                     'nombre' => $this->nombre,
                     'departamento_id' => $this->departamento_id,
